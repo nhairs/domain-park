@@ -73,8 +73,7 @@ PACKAGE_AUTHOR = "Nicholas Hairs"
 PACKAGE_AUTHOR_EMAIL = None
 
 PACKAGE_DEPENDENCIES = [
-    "dnslib",
-    "tldextract",
+    "nserver"
 ]
 
 
