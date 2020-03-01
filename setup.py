@@ -72,9 +72,7 @@ PACKAGE_AUTHOR = "Nicholas Hairs"
 
 PACKAGE_AUTHOR_EMAIL = None
 
-PACKAGE_DEPENDENCIES = [
-    "nserver"
-]
+PACKAGE_DEPENDENCIES = ["nserver>=0.0.2,<1.0"]
 
 
 ## Intermediate Configuration
