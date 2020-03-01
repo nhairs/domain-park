@@ -25,7 +25,7 @@ PARKIT_SERVERS = {
 
 ### SERVER
 ### ============================================================================
-server = NameServer("parkit")  # pylint: disable=invalid-name
+server = NameServer("domain-park")  # pylint: disable=invalid-name
 
 
 @server.rule("{base_domain}", ["NS"])
