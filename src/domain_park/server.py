@@ -1,9 +1,14 @@
+# References:
+#   - https://www.dmarcanalyzer.com/setup-parked-or-inactive-domains/
+#   - https://www.cyber.gov.au/publications/how-to-combat-fake-emails
+#   - https://www.m3aawg.org/sites/default/files/m3aawg_parked_domains_bp-2015-12.pdf
+
 ### IMPORTS
 ### ============================================================================
 ## Standard Library
 
 ## Installed
-from nserver import NameServer, Response, A, TXT, NS
+from nserver import NameServer, Response, A, TXT, NS, MX
 
 ## Application
 
@@ -20,28 +25,51 @@ PARKIT_SERVERS = {
 
 ### SERVER
 ### ============================================================================
-server = NameServer("parkit", "n1.parkit-beta.nicholashairs.com")
+server = NameServer("parkit")  # pylint: disable=invalid-name
+
 
 @server.rule("{base_domain}", ["NS"])
 def name_server_responder(query):
+    """Provide name servers.
+    """
     response = Response()
-    for server, ip in PARKIT_SERVERS.items():
-        response.answers.append(NS(server, resource_name=query.name))
-        response.additional.append(A(ip, resource_name=server))
+    for ns_server, ip in PARKIT_SERVERS.items():  # pylint: disable=invalid-name
+        response.answers.append(NS(query.name, ns_server))
+        response.additional.append(A(ns_server, ip))
     return response
+
 
 @server.rule("_dmarc.{base_domain}", ["TXT"])
 def dmarc_record_responder(query):
-    return TXT("v=DMARC1; p=reject", resource_name=query.name)
+    """Provide DMARC with reject policy.
+    """
+    return TXT(query.name, "v=DMARC1; p=reject")
 
-@server.rule("{base_domain}", "TXT")
+
+@server.rule("{base_domain}", ["TXT"])
+@server.rule("**.{base_domain}", ["TXT"])
 def spf_record_responder(query):
-    return TXT("v=spf1 -all", resource_name=query.name)
+    """Provide SPF that rejects all.
+    """
+    return TXT(query.name, "v=spf1 -all")
+
+
+@server.rule("**._domainkey.{base_domain}", ["TXT"])
+@server.rule("**._domainkey.**.{base_domain}", ["TXT"])
+def dkim_record_responder(query):
+    """Provide empty DKIM key to all potential lookups.
+    """
+    return TXT(query.name, "v=DKIM1; p=")
+
+
+@server.rule("{base_domain}", ["MX"])
+def mx_record_responder(query):
+    """Provide empty MX record.
+    """
+    return MX(query.name, ".", 0)
 
 
 ### MAIN
 ### ============================================================================
 if __name__ == "__main__":
     server.run()
-
-
