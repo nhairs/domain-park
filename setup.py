@@ -62,15 +62,15 @@ PACKAGE_PYTHON_NAME = PACKAGE_NAME.replace("-", "_")
 #
 # See also:
 #   - https://www.python.org/dev/peps/pep-0440/
-PACKAGE_VERSION = "0.0.1"
+PACKAGE_VERSION = "0.0.2"
 
 PACKAGE_DESCRIPTION = "DNS server for parking domains securely"
 
-PACKAGE_URL = None
+PACKAGE_URL = "https://github.com/nhairs/domain-park"
 
 PACKAGE_AUTHOR = "Nicholas Hairs"
 
-PACKAGE_AUTHOR_EMAIL = None
+PACKAGE_AUTHOR_EMAIL = "info+domain-park@nicholashairs.com"
 
 PACKAGE_DEPENDENCIES = ["nserver>=0.0.2,<1.0", "netifaces"]
 
@@ -92,6 +92,15 @@ PACKAGE_EXTRA_DEPENDENCIES = {}
 #   - https://setuptools.readthedocs.io/en/latest/setuptools.html#including-data-files
 INCLUDE_PACKAGE_DATA = None
 
+# Use the following to indicate typing
+# See also:
+#   - https://www.python.org/dev/peps/pep-0561/#packaging-type-information
+
+# INCLUDE_PACKAGE_DATA = {
+#     PACKAGE_NAME: ["py.typed"],
+# }
+
+
 PACKAGE_DATA_FILES = None
 
 EXCLUDE_PACKAGE_DATA = None
@@ -100,12 +109,14 @@ EXCLUDE_PACKAGE_DATA = None
 # to a package repository like PyPI
 #   - https://pypi.org/classifiers/
 PACKAGE_CLASSIFIERS = [
-    "Programming Language :: Python :: 3 :: Only",  # This template is 3.5+
-    # "Programming Language :: Python :: 3.5",
-    # "Programming Language :: Python :: 3.6",
-    # "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
     # Consider adding 3.8, 3.9 as they become available and are tested.
     "Development Status :: 3 - Alpha",  # Default to Alpha.
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Internet",
+    "Topic :: Internet :: Name Service (DNS)",
 ]
 
 # Comma seperated list of keywords describing the package that can be used by
