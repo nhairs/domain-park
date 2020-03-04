@@ -1,6 +1,6 @@
 # Domain Park: Prevent abuse of parked domains
 
-[![PyPi](https://img.shields.io/pypi/v/domain-park.svg)](https://pypi.python.org/pypi/domai-park/)
+[![PyPi](https://img.shields.io/pypi/v/domain-park.svg)](https://pypi.python.org/pypi/domain-park/)
 [![Python Versions](https://img.shields.io/pypi/pyversions/domain-park.svg)](https://github.com/nhairs/domain-park)
 [![License](https://img.shields.io/github/license/nhairs/domain-park.svg)](https://github.com/nhairs/domain-park/blob/master/LICENCE)
 
