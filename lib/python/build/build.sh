@@ -62,6 +62,11 @@ if [ "$PYTHON_PACKAGE_REPOSITORY" == "testpypi" ]; then
     mv "src/${PACKAGE_PYTHON_NAME}" "src/${PACKAGE_PYTHON_NAME}_$(echo -n $TESTPYPI_USERNAME | tr '-' '_')"
 fi
 
+if [[ "$GIT_BRANCH" != "master" ]]; then
+    sed -i "s/^PACKAGE_VERSION = .*/PACKAGE_VERSION = \"${BUILD_VERSION}\"/" setup.py
+    grep "^PACKAGE_VERSION = " setup.py
+fi
+
 ## Build
 ## -----------------------------------------------------------------------------
 python3 setup.py sdist bdist_wheel
