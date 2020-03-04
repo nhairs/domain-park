@@ -72,7 +72,7 @@ PACKAGE_AUTHOR = "Nicholas Hairs"
 
 PACKAGE_AUTHOR_EMAIL = None
 
-PACKAGE_DEPENDENCIES = ["nserver>=0.0.2,<1.0"]
+PACKAGE_DEPENDENCIES = ["nserver>=0.0.2,<1.0", "netifaces"]
 
 
 ## Intermediate Configuration
@@ -80,7 +80,11 @@ PACKAGE_DEPENDENCIES = ["nserver>=0.0.2,<1.0"]
 # Entry Points
 # See also:
 #   - https://setuptools.readthedocs.io/en/latest/setuptools.html#automatic-script-creation
-PACKAGE_ENTRY_POINTS = None
+PACKAGE_ENTRY_POINTS = {
+    "console_scripts": [
+        f"domain-park = {PACKAGE_PYTHON_NAME}.cli:main",
+    ]
+}
 
 # Extra dependencies
 # See also:

@@ -18,26 +18,39 @@
 pip3 install --user domain-park
 ```
 
-## Quick Start
-```shell
-domain-park --host localhost --port 9001
+## Usage
+```
+domain-park --help
+usage: domain-park [-h] [--version] [--host HOST] [--port PORT]
+                   [--tcp | --udp] [--ips]
+
+optional arguments:
+  -h, --help   show this help message and exit
+  --version    show program's version number and exit
+  --host HOST  Host (IP) to bind to. Use --ips to see available. Defaults to
+               localhost.
+  --port PORT  Port to bind to. Defaults to 9953.
+  --tcp        Use TCPv4 socket for transport.
+  --udp        Use UDPv4 socket for transport. (default)
+  --ips        Print available IPs and exit
 ```
 
 Once running, interact using `dig`:
 
 ```shell
-dig -p 9001 @localhost NS example.com
+dig -p 9953 @localhost NS example.com
 
-dig -p 9001 @localhost TXT example.com
-dig -p 9001 @localhost TXT foo.example.com
+dig -p 9953 @localhost TXT example.com
+dig -p 9953 @localhost TXT foo.example.com
 
-dig -p 9001 @localhost TXT _dmarc.example.com
+dig -p 9953 @localhost TXT _dmarc.example.com
 
-dig -p 9001 @localhost TXT asdf._domainkey.example.com
-dig -p 9001 @localhost TXT qwer._domainkey.foo.example.com
+dig -p 9953 @localhost TXT asdf._domainkey.example.com
+dig -p 9953 @localhost TXT qwer._domainkey.foo.example.com
 
-dig -p 9001 @localhost MX example.com
+dig -p 9953 @localhost MX example.com
 ```
+
 
 ## Bugs, Feature Requests etc
 TLDR: Please [submit an issue on github](https://github.com/nhairs/domain-park/issues).
