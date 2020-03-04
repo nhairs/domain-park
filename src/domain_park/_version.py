@@ -2,7 +2,7 @@
 ### IMPORTS
 ### ============================================================================
 ## Standard Library
-import datetime
+import datetime  # pylint: disable=unused-import
 
 ## Installed
 
