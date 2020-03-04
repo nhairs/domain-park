@@ -2,6 +2,7 @@
 ### ============================================================================
 ## Standard Library
 import argparse
+import logging
 import sys
 
 ## Installed
@@ -98,6 +99,7 @@ def main(argv=None):  # pylint: disable=missing-function-docstring,global-statem
     server.settings.SERVER_TYPE = args.transport
     server.settings.SERVER_ADDRESS = args.host
     server.settings.SERVER_PORT = args.port
+    server.settings.CONSOLE_LOG_LEVEL = logging.WARNING
 
     # Save server
     _SERVER = server
