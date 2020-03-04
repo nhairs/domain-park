@@ -46,20 +46,20 @@ def dmarc_record_responder(query):
     return TXT(query.name, "v=DMARC1; p=reject")
 
 
-@server.rule("{base_domain}", ["TXT"])
-@server.rule("**.{base_domain}", ["TXT"])
-def spf_record_responder(query):
-    """Provide SPF that rejects all.
-    """
-    return TXT(query.name, "v=spf1 -all")
-
-
 @server.rule("**._domainkey.{base_domain}", ["TXT"])
 @server.rule("**._domainkey.**.{base_domain}", ["TXT"])
 def dkim_record_responder(query):
     """Provide empty DKIM key to all potential lookups.
     """
     return TXT(query.name, "v=DKIM1; p=")
+
+
+@server.rule("{base_domain}", ["TXT"])
+@server.rule("**.{base_domain}", ["TXT"])
+def spf_record_responder(query):
+    """Provide SPF that rejects all.
+    """
+    return TXT(query.name, "v=spf1 -all")
 
 
 @server.rule("{base_domain}", ["MX"])
