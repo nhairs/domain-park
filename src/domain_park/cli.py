@@ -2,10 +2,13 @@
 ### ============================================================================
 ## Standard Library
 import argparse
+import logging
 import sys
+from typing import List, Dict, Any
 
 ## Installed
 import netifaces  # type: ignore
+import nserver
 
 ## Application
 from . import _version
@@ -13,11 +16,16 @@ from .server import server as nserver_server
 
 ### CONSTANTS
 ### ============================================================================
-DESCRIPTION = f"""Version: {_version.get_version_info()}
+DESCRIPTION = (
+    "domain-park is a DNS Name Server that can be used to prevent spoofed emails on parked domains."
+)
+
+EPILOG = """For full information including licence see https://github.com/nhairs/domain-park
+
+Copyright (c) 2020 Nicholas Hairs
 """
 
-_SERVER = None
-_PARSER = None
+_APP = None
 
 ### FUNCTIONS
 ### ============================================================================
@@ -35,73 +43,105 @@ def get_available_ips():
     return ip_list
 
 
-def main(argv=None):  # pylint: disable=missing-function-docstring,global-statement
-    global _SERVER  # pylint: disable=global-statement
-    global _PARSER  # pylint: disable=global-statement
+def main(argv=None):
+    """Main function for use with setup.py
+    """
+    global _APP  # pylint: disable=global-statement
 
-    if argv is None:
-        argv = sys.argv[1:]
+    _APP = Application(argv)
+    _APP.run()
+    return
 
-    # Create argument parser
-    parser = argparse.ArgumentParser(description=DESCRIPTION)
 
-    parser.add_argument("--version", action="version", version=_version.get_version_info_full())
+### CLASSES
+### ============================================================================
+class Application:
+    """domain-park application.
 
-    parser.add_argument(
-        "--host",
-        action="store",
-        default="localhost",
-        help="Host (IP) to bind to. Use --ips to see available. Defaults to localhost.",
-    )
+    Handles reading config and instantiating nserver instance.
+    """
 
-    parser.add_argument(
-        "--port", action="store", default=9953, type=int, help="Port to bind to. Defaults to 9953."
-    )
-
-    transport_group = parser.add_mutually_exclusive_group()
-    transport_group.add_argument(
-        "--tcp",
-        action="store_const",
-        const="TCPv4",
-        dest="transport",
-        help="Use TCPv4 socket for transport.",
-    )
-    transport_group.add_argument(
-        "--udp",
-        action="store_const",
-        const="UDPv4",
-        dest="transport",
-        help="Use UDPv4 socket for transport. (default)",
-    )
-
-    # TODO
-    # - implement rua, ruf
-
-    parser.add_argument("--ips", action="store_true", help="Print available IPs and exit")
-
-    parser.set_defaults(transport="UDPv4")
-
-    # Save argument parser
-    _PARSER = parser
-
-    # Parse arguments
-    args = parser.parse_args(argv)
-
-    # special case
-    if args.ips:
-        print("\n".join(get_available_ips()))
+    def __init__(self, argv: List[str] = None):
+        self.argv = argv if argv is not None else sys.argv[1:]
+        self.parser = self.get_parser()
+        self.args = self.parser.parse_args(self.argv)
+        self.config = self.get_config()
+        self.server = self.get_server()
         return
 
-    # Create and configure server
-    server = nserver_server
+    def run(self) -> None:
+        """Run application.
+        """
+        if self.args.ips:
+            print("\n".join(get_available_ips()))
+            return
+        self.server.run()
+        return
 
-    server.settings.SERVER_TYPE = args.transport
-    server.settings.SERVER_ADDRESS = args.host
-    server.settings.SERVER_PORT = args.port
+    @staticmethod
+    def get_parser() -> argparse.ArgumentParser:
+        """Get argument parser.
+        """
+        parser = argparse.ArgumentParser(
+            formatter_class=argparse.RawDescriptionHelpFormatter,
+            description=DESCRIPTION,
+            epilog=EPILOG,
+        )
 
-    # Save server
-    _SERVER = server
+        parser.add_argument("--version", action="version", version=_version.get_version_info_full())
 
-    # Run server
-    server.run()
-    return
+        parser.add_argument(
+            "--host",
+            action="store",
+            default="localhost",
+            help="Host (IP) to bind to. Use --ips to see available. Defaults to localhost.",
+        )
+
+        parser.add_argument(
+            "--port",
+            action="store",
+            default=9953,
+            type=int,
+            help="Port to bind to. Defaults to 9953.",
+        )
+
+        transport_group = parser.add_mutually_exclusive_group()
+        transport_group.add_argument(
+            "--tcp",
+            action="store_const",
+            const="TCPv4",
+            dest="transport",
+            help="Use TCPv4 socket for transport.",
+        )
+        transport_group.add_argument(
+            "--udp",
+            action="store_const",
+            const="UDPv4",
+            dest="transport",
+            help="Use UDPv4 socket for transport. (default)",
+        )
+
+        # TODO
+        # - implement rua, ruf
+
+        parser.add_argument("--ips", action="store_true", help="Print available IPs and exit")
+
+        parser.set_defaults(transport="UDPv4")
+        return parser
+
+    @staticmethod
+    def get_config() -> Dict[str, Any]:
+        """Get config taking into account command line arguments.
+        """
+        return {}
+
+    def get_server(self) -> nserver.NameServer:
+        """Get NameServer instance.
+        """
+        server = nserver_server
+
+        server.settings.SERVER_TYPE = self.args.transport
+        server.settings.SERVER_ADDRESS = self.args.host
+        server.settings.SERVER_PORT = self.args.port
+        server.settings.CONSOLE_LOG_LEVEL = logging.WARNING
+        return server
