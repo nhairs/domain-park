@@ -22,17 +22,32 @@ pip3 install --user domain-park
 ```
 domain-park --help
 usage: domain-park [-h] [--version] [--host HOST] [--port PORT]
-                   [--tcp | --udp] [--ips]
+                   [--tcp | --udp] -n NAMESERVER [--rua EMAIL] [--ruf EMAIL]
+                   [--ips]
 
 optional arguments:
-  -h, --help   show this help message and exit
-  --version    show program's version number and exit
-  --host HOST  Host (IP) to bind to. Use --ips to see available. Defaults to
-               localhost.
-  --port PORT  Port to bind to. Defaults to 9953.
-  --tcp        Use TCPv4 socket for transport.
-  --udp        Use UDPv4 socket for transport. (default)
-  --ips        Print available IPs and exit
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  --host HOST           Host (IP) to bind to. Use --ips to see available.
+                        Defaults to localhost.
+  --port PORT           Port to bind to. Defaults to 9953.
+  --tcp                 Use TCPv4 socket for transport.
+  --udp                 Use UDPv4 socket for transport. (default)
+  -n NAMESERVER, --nameserver NAMESERVER
+                        Add NameServer to list returned on NS lookups. This
+                        should be equal to the NS records available publicly
+                        running domain-park. Must be supplied at least once,
+                        and has no limit. Reccomended to have 2-4 Name
+                        Servers. Expected to be in the format of either
+                        'FQDN:IP' or 'IP'
+  --rua EMAIL           Email address to use for DMARC aggregate repots.
+  --ruf EMAIL           Email address to use for DMARC forensic reports.
+  --ips                 Print available IPs and exit
+```
+
+Example:
+```shell
+domain-park -n ns1.parkit-beta.nicholashairs.com -n ns2.parkit-beta.nicholashairs.com
 ```
 
 Once running, interact using `dig`:
@@ -67,7 +82,7 @@ I am still working through open source licencing and contributing, so not taking
 ## Licence
 This project is licenced under the MIT Licence - see [`LICENCE`](https://github.com/nahirs/domain-park/blob/master/LICENCE).
 
-This project may include other open source licenced software - see [`NOTICE`](https://github.com/nhairs/domain-park/blob/master/NOTICE).
+This project includes other open source licenced software - see [`NOTICE`](https://github.com/nhairs/domain-park/blob/master/NOTICE).
 
 ## Authors
 A project by Nicholas Hairs - [www.nicholashairs.com](https://www.nicholashairs.com).

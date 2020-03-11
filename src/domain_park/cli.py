@@ -4,7 +4,7 @@
 import argparse
 import logging
 import sys
-from typing import List, Dict, Any
+from typing import List
 
 ## Installed
 import netifaces  # type: ignore
@@ -65,7 +65,6 @@ class Application:
         self.argv = argv if argv is not None else sys.argv[1:]
         self.parser = self.get_parser()
         self.args = self.parser.parse_args(self.argv)
-        self.config = self.get_config()
         self.server = self.get_server()
         return
 
@@ -75,6 +74,7 @@ class Application:
         if self.args.ips:
             print("\n".join(get_available_ips()))
             return
+
         self.server.run()
         return
 
@@ -90,6 +90,7 @@ class Application:
 
         parser.add_argument("--version", action="version", version=_version.get_version_info_full())
 
+        # Server settings
         parser.add_argument(
             "--host",
             action="store",
@@ -121,19 +122,35 @@ class Application:
             help="Use UDPv4 socket for transport. (default)",
         )
 
-        # TODO
-        # - implement rua, ruf
+        # DNS settings
+        parser.add_argument(
+            "-n",
+            "--nameserver",
+            required=True,
+            action="append",
+            help="Add NameServer to list returned on NS lookups. This should be equal to the NS records available publicly running domain-park. Must be supplied at least once, and has no limit. Reccomended to have 2-4 Name Servers. Expected to be in the format of either 'FQDN:IP' or 'HOST'",
+            dest="nameservers",
+            metavar="NAMESERVER",
+        )
+
+        parser.add_argument(
+            "--rua",
+            action="store",
+            help="Email address to use for DMARC aggregate repots.",
+            metavar="EMAIL",
+        )
+
+        parser.add_argument(
+            "--ruf",
+            action="store",
+            help="Email address to use for DMARC forensic reports.",
+            metavar="EMAIL",
+        )
 
         parser.add_argument("--ips", action="store_true", help="Print available IPs and exit")
 
         parser.set_defaults(transport="UDPv4")
         return parser
-
-    @staticmethod
-    def get_config() -> Dict[str, Any]:
-        """Get config taking into account command line arguments.
-        """
-        return {}
 
     def get_server(self) -> nserver.NameServer:
         """Get NameServer instance.
@@ -144,4 +161,21 @@ class Application:
         server.settings.SERVER_ADDRESS = self.args.host
         server.settings.SERVER_PORT = self.args.port
         server.settings.CONSOLE_LOG_LEVEL = logging.WARNING
+
+        nameservers = []
+        for nameserver in self.args.nameservers:
+            if ":" in nameserver:
+                host, ip = nameserver.split(":")
+            else:
+                # assume IP
+                host = None
+                ip = nameserver
+
+            # TODO: IP validation
+
+            nameservers.append((host, ip))
+
+        server.settings.NAME_SERVERS = nameservers
+        server.settings.RUA = self.args.rua
+        server.settings.RUF = self.args.ruf
         return server

@@ -32,10 +32,16 @@ server = NameServer("domain-park")  # pylint: disable=invalid-name
 def name_server_responder(query):
     """Provide name servers.
     """
+    # pylint: disable=no-member
+    # We attach extra things to server.settings in the cli wrapper
+
     response = Response()
-    for ns_server, ip in PARKIT_SERVERS.items():  # pylint: disable=invalid-name
-        response.answers.append(NS(query.name, ns_server))
-        response.additional.append(A(ns_server, ip))
+    for host, ip in server.settings.NAME_SERVERS:
+        if host is None:
+            response.answers.append(NS(query.name, ip))
+        else:
+            response.answers.append(NS(query.name, host))
+            response.additional.append(A(host, ip))
     return response
 
 
@@ -43,7 +49,18 @@ def name_server_responder(query):
 def dmarc_record_responder(query):
     """Provide DMARC with reject policy.
     """
-    return TXT(query.name, "v=DMARC1; p=reject")
+    # pylint: disable=no-member
+    # We attach extra things to server.settings in the cli wrapper
+
+    dmarc_string = "v=DMARC1; p=reject;"
+
+    if server.settings.RUA:
+        dmarc_string += f" rua={server.settings.RUA};"
+
+    if server.settings.RUF:
+        dmarc_string += f" rua={server.settings.RUF};"
+
+    return TXT(query.name, dmarc_string)
 
 
 @server.rule("**._domainkey.{base_domain}", ["TXT"])
