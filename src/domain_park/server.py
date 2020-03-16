@@ -55,10 +55,10 @@ def dmarc_record_responder(query):
     dmarc_string = "v=DMARC1; p=reject;"
 
     if server.settings.RUA:
-        dmarc_string += f" rua={server.settings.RUA};"
+        dmarc_string += f" rua=mailto:{server.settings.RUA};"
 
     if server.settings.RUF:
-        dmarc_string += f" rua={server.settings.RUF};"
+        dmarc_string += f" ruf=mailto:{server.settings.RUF};"
 
     return TXT(query.name, dmarc_string)
 
