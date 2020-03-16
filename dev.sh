@@ -130,8 +130,6 @@ function check_file {
 
 ### MAIN
 ### ============================================================================
-docker_autoclean
-
 case $1 in
 
     "format")
@@ -264,3 +262,5 @@ case $1 in
         exit 255
         ;;
 esac
+
+docker_autoclean
