@@ -13,16 +13,6 @@ from nserver import NameServer, Response, A, TXT, NS, MX
 ## Application
 
 
-### CONSTANTS
-### ============================================================================
-PARKIT_SERVERS = {
-    "ns1.parkit-beta.nicholashairs.com": "178.128.19.50",
-    "ns2.parkit-beta.nicholashairs.com": "178.128.19.50",
-    "ns3.parkit-beta.nicholashairs.com": "178.128.19.50",
-    "ns4.parkit-beta.nicholashairs.com": "178.128.19.50",
-}
-
-
 ### SERVER
 ### ============================================================================
 server = NameServer("domain-park")  # pylint: disable=invalid-name
