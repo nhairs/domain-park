@@ -1,37 +1,28 @@
-## Welcome to GitHub Pages
+# domain-park.org
+Domain-park is an open-source DNS Name server that implements best practice MX, SPF, DKIM, and DMARC DNS records in order to prevent spoofing of registered but unused domain names. For more detail on what this means, check out the [domain-park announcement post on nicholashairs.com](https://www.nicholashairs.com/posts/preventing-email-spoofing-on-unused-domains/).
 
-You can use the [editor on GitHub](https://github.com/nhairs/domain-park-website/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+There are two ways that you can take advantage of domain-park. The easiest way is to use our free public servers. If you want more control, you can also run your own private server.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+**Note: the `domain-park` software and domain-park.org are currently in alpha release and may be prone to bugs, down-time, or other unexpected behaviour.** Please report bugs via [GitHub issues](https://github.com/nhairs/domain-park/issues).
 
-### Markdown
+# Free Public Servers
+In order to make these protections available to all, domain-park.org has free to use public name servers. In order to use these name servers you will need to update the name servers used by each domain to one or more of the following name servers:
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```
+ns1.domain-park.org
+ns2.domain-park.org
+ns3.domain-park.org
+ns4.domain-park.org
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+The process of updating your name server will be dependent on where your domain is registered. They will have documentation on how to do this, but there are too many to list them here.
 
-### Jekyll Themes
+## Disclaimer
+Although care is taken in the operation of domain-park.org, using a third-party name server to manage your domains does come with risks. If these risks are unacceptable to you or your organisation then you should not use the public servers and consider running your own instance of domain-park.
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/nhairs/domain-park-website/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
 
-### Support or Contact
+# Private Servers
+In order to run your own instance of domain-park you will need a server with a publicly accessible IP address and Python 3.6+. For installation and usage refer to the [readme on GitHub](https://github.com/nhairs/domain-park). Currently domain-park has only been tested on Ubuntu.
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+# Author
+The domain-park software and domain-park.org website have been created by [Nicholas Hairs](https://www.nicholashairs.com) - a security professional working in Australian tech.
