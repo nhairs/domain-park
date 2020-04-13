@@ -4,13 +4,16 @@
 [![Python Versions](https://img.shields.io/pypi/pyversions/domain-park.svg)](https://github.com/nhairs/domain-park)
 [![License](https://img.shields.io/github/license/nhairs/domain-park.svg)](https://github.com/nhairs/domain-park/blob/master/LICENCE)
 
-`domain-park` is a DNS Name Server designed to prevent spoofed emails on parked domains.
+`domain-park` is an open-source DNS Name server that implements best practice `MX`, SPF, DKIM, and DMARC DNS records in order to prevent spoofing of registered but unused domain names (also known as parked domains).
 
-*Features:*
+**Features:**
 - Implement best practice DNS records for SPF, DKIM, DMARC, MX compliance.
 - Handle unlimited domains with little to no configuration.
+- Setup receiving of DMARC aggregate reports.
 
 `domain-park` is currently Alpha software and does not have complete documentation, testing, or implementation of certain features.
+
+This page is for the domain-park software, you may be looking for the [domain-park.org](https://www.domain-park.org) public name servers.
 
 ## Installation
 ### Install via pip
@@ -47,7 +50,7 @@ optional arguments:
 
 Example:
 ```shell
-domain-park -n ns1.parkit-beta.nicholashairs.com -n ns2.parkit-beta.nicholashairs.com
+domain-park -n ns1.domain-park.org -n ns2.domain-park.org
 ```
 
 Once running, interact using `dig`:
@@ -65,6 +68,11 @@ dig -p 9953 @localhost TXT qwer._domainkey.foo.example.com
 
 dig -p 9953 @localhost MX example.com
 ```
+
+## Production Usage
+In order to setup domain-park for use with publicly accessible domains, you will need a static IP address for the server running `domain-park` and a domain which you can set records on.
+
+On your domain you will need to create an `A` for your name server using the static IP address. Once done you will then need to create a [glue record](https://en.wikipedia.org/wiki/Domain_Name_System#Circular_dependencies_and_glue_records) for the previously created `A` record.
 
 
 ## Bugs, Feature Requests etc
