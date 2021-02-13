@@ -20,8 +20,7 @@ server = NameServer("domain-park")  # pylint: disable=invalid-name
 
 @server.rule("{base_domain}", ["NS"])
 def name_server_responder(query):
-    """Provide name servers.
-    """
+    """Provide name servers."""
     # pylint: disable=no-member
     # We attach extra things to server.settings in the cli wrapper
 
@@ -37,8 +36,7 @@ def name_server_responder(query):
 
 @server.rule("_dmarc.{base_domain}", ["TXT"])
 def dmarc_record_responder(query):
-    """Provide DMARC with reject policy.
-    """
+    """Provide DMARC with reject policy."""
     # pylint: disable=no-member
     # We attach extra things to server.settings in the cli wrapper
 
@@ -56,23 +54,20 @@ def dmarc_record_responder(query):
 @server.rule("**._domainkey.{base_domain}", ["TXT"])
 @server.rule("**._domainkey.**.{base_domain}", ["TXT"])
 def dkim_record_responder(query):
-    """Provide empty DKIM key to all potential lookups.
-    """
+    """Provide empty DKIM key to all potential lookups."""
     return TXT(query.name, "v=DKIM1; p=")
 
 
 @server.rule("{base_domain}", ["TXT"])
 @server.rule("**.{base_domain}", ["TXT"])
 def spf_record_responder(query):
-    """Provide SPF that rejects all.
-    """
+    """Provide SPF that rejects all."""
     return TXT(query.name, "v=spf1 -all")
 
 
 @server.rule("{base_domain}", ["MX"])
 def mx_record_responder(query):
-    """Provide empty MX record.
-    """
+    """Provide empty MX record."""
     return MX(query.name, ".", 0)
 
 

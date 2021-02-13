@@ -30,8 +30,7 @@ _APP = None
 ### FUNCTIONS
 ### ============================================================================
 def get_available_ips():
-    """Get all available IPv4 Address on this machine.
-    """
+    """Get all available IPv4 Address on this machine."""
     # Source: https://stackoverflow.com/a/274644
     ip_list = []
     for interface in netifaces.interfaces():
@@ -44,8 +43,7 @@ def get_available_ips():
 
 
 def main(argv=None):
-    """Main function for use with setup.py
-    """
+    """Main function for use with setup.py"""
     global _APP  # pylint: disable=global-statement
 
     _APP = Application(argv)
@@ -69,8 +67,7 @@ class Application:
         return
 
     def run(self) -> None:
-        """Run application.
-        """
+        """Run application."""
         if self.args.ips:
             print("\n".join(get_available_ips()))
             return
@@ -80,8 +77,7 @@ class Application:
 
     @staticmethod
     def get_parser() -> argparse.ArgumentParser:
-        """Get argument parser.
-        """
+        """Get argument parser."""
         parser = argparse.ArgumentParser(
             formatter_class=argparse.RawDescriptionHelpFormatter,
             description=DESCRIPTION,
@@ -153,8 +149,7 @@ class Application:
         return parser
 
     def get_server(self) -> nserver.NameServer:
-        """Get NameServer instance.
-        """
+        """Get NameServer instance."""
         server = nserver_server
 
         server.settings.SERVER_TYPE = self.args.transport

@@ -80,7 +80,11 @@ PACKAGE_DEPENDENCIES = ["nserver>=0.0.2,<1.0", "netifaces"]
 # Entry Points
 # See also:
 #   - https://setuptools.readthedocs.io/en/latest/setuptools.html#automatic-script-creation
-PACKAGE_ENTRY_POINTS = {"console_scripts": [f"domain-park = {PACKAGE_PYTHON_NAME}.cli:main",]}
+PACKAGE_ENTRY_POINTS = {
+    "console_scripts": [
+        f"domain-park = {PACKAGE_PYTHON_NAME}.cli:main",
+    ]
+}
 
 # Extra dependencies
 # See also:
