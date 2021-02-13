@@ -8,7 +8,7 @@
 ## Standard Library
 
 ## Installed
-from nserver import NameServer, Response, A, TXT, NS, MX
+from nserver import NameServer, Response, A, TXT, NS, MX, CAA
 
 ## Application
 
@@ -69,6 +69,15 @@ def spf_record_responder(query):
 def mx_record_responder(query):
     """Provide empty MX record."""
     return MX(query.name, ".", 0)
+
+
+@server.rule("{base_domain}", ["CAA"])
+@server.rule("**.{base_domain}", ["CAA"])
+def caa_record_responder(query):
+    """Provide CAA that rejects all."""
+    # TODO: look into priority flag and determine if it should be set.
+    # TODO: look into add iodef records to allow reporting
+    return CAA(query.name, 0, "issue", ";")
 
 
 ### MAIN

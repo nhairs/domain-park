@@ -62,7 +62,7 @@ PACKAGE_PYTHON_NAME = PACKAGE_NAME.replace("-", "_")
 #
 # See also:
 #   - https://www.python.org/dev/peps/pep-0440/
-PACKAGE_VERSION = "0.1.1"
+PACKAGE_VERSION = "0.2.0"
 
 PACKAGE_DESCRIPTION = "DNS server for parking domains securely"
 
@@ -72,7 +72,7 @@ PACKAGE_AUTHOR = "Nicholas Hairs"
 
 PACKAGE_AUTHOR_EMAIL = "info+domain-park@nicholashairs.com"
 
-PACKAGE_DEPENDENCIES = ["nserver>=0.0.2,<1.0", "netifaces"]
+PACKAGE_DEPENDENCIES = ["nserver>=0.1.0,<1.0", "netifaces"]
 
 
 ## Intermediate Configuration
