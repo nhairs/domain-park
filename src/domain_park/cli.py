@@ -47,8 +47,8 @@ def main(argv=None):
     global _APP  # pylint: disable=global-statement
 
     _APP = Application(argv)
-    _APP.run()
-    return
+    exit_code = _APP.run()
+    return exit_code
 
 
 ### CLASSES
