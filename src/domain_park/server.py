@@ -71,6 +71,12 @@ def mx_record_responder(query):
     return MX(query.name, ".", 0)
 
 
+@server.rule("{base_domain}", ["A", "AAAA"])
+def a_record_responder(query):
+    """Provide no A/AAAA records"""
+    return Response()
+
+
 @server.rule("{base_domain}", ["CAA"])
 @server.rule("**.{base_domain}", ["CAA"])
 def caa_record_responder(query):
