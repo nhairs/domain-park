@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "domain-park"
+version = "0.3.2"
+description = "DNS server for parking domains securely"
+authors  = [
+    {name = "Nicholas Hairs", email = "info+domain-park@nicholashairs.com"},
+]
+
+# Dependency Information
+requires-python = ">=3.7"
+dependencies = [
+    "nserver>=0.3.2,<1.0",
+    "netifaces",
+]
+
+# Extra information
+readme = "README.md"
+license = {file = "LICENCE"}
+classifiers = [
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Internet",
+    "Topic :: Internet :: Name Service (DNS)",
+]
+
+[project.urls]
+homepage = "https://github.com/nhairs/domain-park"
+
+[project.optional-dependencies]
+dev = [  # Centralise dev dependencies
+    ## Building Python Package
+    "setuptools",
+    "wheel",
+    ## Formatting / Linting
+    "black",
+    "pylint",
+    "mypy",
+    ## Testing
+    "pytest",
+    ## Docs
+    "mkdocs",
+    "mkdocs-material>=8.5",
+    "mkdocs-awesome-pages-plugin",
+    "mdx_truly_sane_lists",
+    ## REPL
+    "bpython",
+]
+
+[project.scripts]
+domain-park = "domain_park.cli:main"
