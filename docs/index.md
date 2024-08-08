@@ -1,12 +1,17 @@
 # domain-park.org
-Domain-park is an open-source DNS Name server that implements best practice MX, SPF, DKIM, and DMARC DNS records in order to prevent spoofing of registered but unused domain names. For more detail on what this means, check out the [domain-park announcement post on nicholashairs.com](https://www.nicholashairs.com/posts/preventing-email-spoofing-on-unused-domains/).
 
-There are two ways that you can take advantage of domain-park. The easiest way is to use our free public servers. If you want more control, you can also run your own private server.
+Domain-park.org is a free service for securely parking unused domains:
 
-**Note: the `domain-park` software and domain-park.org are currently in alpha release and may be prone to bugs, down-time, or other unexpected behaviour.** Please report bugs via [GitHub issues](https://github.com/nhairs/domain-park/issues).
+- **Prevents Email Spoofing**: protect your staff, your customers, and the general public from phishing emails using your unused domains.
+  - Implements best practice MX, [SPF, DKIM, and DMARC](https://www.cyber.gov.au/resources-business-and-government/maintaining-devices-and-systems/system-hardening-and-administration/email-hardening/how-combat-fake-emails) records.
+- **Prevents Domain Takeover**: avoid domains becoming [Sitting Ducks](https://krebsonsecurity.com/2024/07/dont-let-your-domain-name-become-a-sitting-duck/).
+  - Check if your DNS provider is vulnerable to DNS takeover [here](https://github.com/indianajson/can-i-take-over-dns?tab=readme-ov-file).
+- **Simple Setup**: just set domain-park.org as your name servers, no signup or further configuration required.
+  - Many registrars will let you update in bulk or set default name servers for new domains, why not use domain-park.org to quickly protect your domains?
+- **Free**: using the public domain-park.org name servers is free no matter how many domains you have.
 
-# Free Public Servers
-In order to make these protections available to all, domain-park.org has free to use public name servers. In order to use these name servers you will need to update the name servers used by each domain to one or more of the following name servers:
+# Free Public Namer Servers
+In order to use these name servers you will need to update the name servers used by each domain to one or more of the following name servers:
 
 ```
 ns1.domain-park.org
@@ -15,14 +20,9 @@ ns3.domain-park.org
 ns4.domain-park.org
 ```
 
-The process of updating your name server will be dependent on where your domain is registered. They will have documentation on how to do this, but there are too many to list them here.
-
-## Disclaimer
-Although care is taken in the operation of domain-park.org, using a third-party name server to manage your domains does come with risks. If these risks are unacceptable to you or your organisation then you should not use the public servers and consider running your own instance of domain-park.
-
-
-# Private Servers
-In order to run your own instance of domain-park you will need a server with a publicly accessible IP address and Python 3.6+. For installation and usage refer to the [readme on GitHub](https://github.com/nhairs/domain-park). Currently domain-park has only been tested on Ubuntu.
+The process of updating your name server will be dependent on where your domain is registered.
 
 # Author
-The domain-park software and domain-park.org website have been created by [Nicholas Hairs](https://www.nicholashairs.com) - a security professional working in Australian tech.
+The domain-park software and domain-park.org website have been created by [Nicholas Hairs](https://www.nicholashairs.com).
+
+For more information you can check out the [domain-park announcement post on nicholashairs.com](https://www.nicholashairs.com/posts/preventing-email-spoofing-on-unused-domains/).
