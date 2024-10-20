@@ -39,7 +39,7 @@ PACKAGE_VERSION=$(toml get --toml-path pyproject.toml project.version)
 ## -----------------------------------------------------------------------------
 # You may want to customise these for your project
 SOURCE_FILES="src tests"
-MIN_PYTHON_VERSION="py37"
+MIN_PYTHON_VERSION="py38"
 
 ## Build related
 ## -----------------------------------------------------------------------------

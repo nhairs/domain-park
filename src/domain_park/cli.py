@@ -1,30 +1,22 @@
 ### IMPORTS
 ### ============================================================================
+## Future
+from __future__ import annotations
+
 ## Standard Library
 import argparse
-import logging
-import sys
-from typing import List
 
 ## Installed
-import netifaces  # type: ignore
+import netifaces
 import nserver
+import pillar.application
 
 ## Application
 from . import _version
-from .server import server as nserver_server
+from .server import make_server
 
 ### CONSTANTS
 ### ============================================================================
-DESCRIPTION = (
-    "domain-park is a DNS Name Server that can be used to prevent spoofed emails on parked domains."
-)
-
-EPILOG = """For full information including licence see https://github.com/nhairs/domain-park
-
-Copyright (c) 2020 Nicholas Hairs
-"""
-
 _APP = None
 
 
@@ -48,44 +40,38 @@ def main(argv=None):
     global _APP  # pylint: disable=global-statement
 
     _APP = Application(argv)
-    exit_code = _APP.run()
-    return exit_code
+    return _APP.run()
 
 
 ### CLASSES
 ### ============================================================================
-class Application:
-    """domain-park application.
+class IpsAction(argparse.Action):
+    "ArgParse Action to print IPs and exit"
+    # Ref: https://stackoverflow.com/a/25596386/12281814
 
-    Handles reading config and instantiating nserver instance.
-    """
-
-    def __init__(self, argv: List[str] = None):
-        self.argv = argv if argv is not None else sys.argv[1:]
-        self.parser = self.get_parser()
-        self.args = self.parser.parse_args(self.argv)
-        self.server = self.get_server()
+    def __call__(self, parser, *args, **kwargs):
+        print("\n".join(get_available_ips()))
+        parser.exit(0)
         return
 
-    def run(self) -> None:
-        """Run application."""
-        if self.args.ips:
-            print("\n".join(get_available_ips()))
-            return
 
-        self.server.run()
-        return
+class Application(pillar.application.Application):
+    """domain-park is a DNS Name Server that can be used to prevent spoofed emails on parked domains."""
 
-    @staticmethod
-    def get_parser() -> argparse.ArgumentParser:
-        """Get argument parser."""
-        parser = argparse.ArgumentParser(
-            formatter_class=argparse.RawDescriptionHelpFormatter,
-            description=DESCRIPTION,
-            epilog=EPILOG,
-        )
+    application_name = "domain-park"
+    name = "domain_park"
+    version = _version.get_version_info_full()
+    epilog = (
+        "For full information including licence see https://github.com/nhairs/domain-park\n\n"
+        "Copyright (c) 2020 Nicholas Hairs"
+    )
+    config_args_enabled = False
+    logging_manifest = pillar.application.LoggingManifest(additional_namespaces=["nserver"])  # type: ignore[call-arg]
 
-        parser.add_argument("--version", action="version", version=_version.get_version_info_full())
+    server: nserver.NameServer
+
+    def get_argument_parser(self) -> argparse.ArgumentParser:
+        parser = super().get_argument_parser()
 
         # Server settings
         parser.add_argument(
@@ -144,19 +130,24 @@ class Application:
             metavar="EMAIL",
         )
 
-        parser.add_argument("--ips", action="store_true", help="Print available IPs and exit")
+        parser.add_argument(
+            "--ips",
+            action=IpsAction,
+            nargs=0,
+            help="Print available IPs and exit",
+        )
 
         parser.set_defaults(transport="UDPv4")
         return parser
 
     def get_server(self) -> nserver.NameServer:
         """Get NameServer instance."""
-        server = nserver_server
 
-        server.settings.SERVER_TYPE = self.args.transport
-        server.settings.SERVER_ADDRESS = self.args.host
-        server.settings.SERVER_PORT = self.args.port
-        server.settings.CONSOLE_LOG_LEVEL = logging.WARNING
+        settings = nserver.Settings()
+        settings.server_transport = self.args.transport
+        settings.server_address = self.args.host
+        settings.server_port = self.args.port
+        settings.console_log_level = 0
 
         nameservers = []
         for nameserver in self.args.nameservers:
@@ -171,7 +162,17 @@ class Application:
 
             nameservers.append((host, ip))
 
-        server.settings.NAME_SERVERS = nameservers
-        server.settings.RUA = self.args.rua
-        server.settings.RUF = self.args.ruf
-        return server
+        return make_server(nameservers, self.args.rua, self.args.ruf, settings)
+
+    def setup(self, *args, **kwargs):
+        super().setup(*args, **kwargs)
+        self.server = self.get_server()
+        return
+
+    def main(self) -> None:
+        if self.args.ips:
+            print("\n".join(get_available_ips()))
+            return
+
+        self.server.run()
+        return

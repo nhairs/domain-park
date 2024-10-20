@@ -22,8 +22,6 @@ RUN --mount=target=/var/lib/apt/lists,type=cache,sharing=locked \
 RUN --mount=target=/var/lib/apt/lists,type=cache,sharing=locked \
     --mount=target=/var/cache/apt,type=cache,sharing=locked \
     apt install --yes \
-        python3.6 python3.6-dev python3.6-distutils \
-        python3.7 python3.7-dev python3.7-distutils \
         python3.9 python3.9-dev python3.9-distutils \
         python3.10 python3.10-dev python3.10-distutils \
         python3.11 python3.11-dev python3.11-distutils
