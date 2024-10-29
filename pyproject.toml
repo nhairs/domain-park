@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "domain-park"
-version = "0.4.0"
+version = "0.4.1"
 description = "DNS server for parking domains securely"
 authors  = [
     {name = "Nicholas Hairs", email = "info+domain-park@nicholashairs.com"},
@@ -13,7 +13,7 @@ authors  = [
 # Dependency Information
 requires-python = ">=3.8"
 dependencies = [
-    "nserver==0.4.0",
+    "nserver==1.0.2",
     "netifaces",
     "pillar[recommended]==0.3.0",
 ]
