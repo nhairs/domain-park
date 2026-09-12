@@ -8,8 +8,8 @@ import argparse
 
 ## Installed
 import netifaces
-import nserver
-import pillar.application
+import nserver.cli
+import pillar
 
 ## Application
 from . import _version
@@ -47,6 +47,7 @@ def main(argv=None):
 ### ============================================================================
 class IpsAction(argparse.Action):
     "ArgParse Action to print IPs and exit"
+
     # Ref: https://stackoverflow.com/a/25596386/12281814
 
     def __call__(self, parser, *args, **kwargs):
@@ -55,7 +56,7 @@ class IpsAction(argparse.Action):
         return
 
 
-class Application(pillar.application.Application):
+class Application(nserver.cli.CliApplication):
     """domain-park is a DNS Name Server that can be used to prevent spoofed emails on parked domains."""
 
     application_name = "domain-park"
@@ -66,44 +67,15 @@ class Application(pillar.application.Application):
         "Copyright (c) 2020 Nicholas Hairs"
     )
     config_args_enabled = False
-    logging_manifest = pillar.application.LoggingManifest(additional_namespaces=["nserver"])  # type: ignore[call-arg]
+    logging_manifest = pillar.application.LoggingManifest(
+        console_format="[{asctime}][{log_color}{levelname}{reset}][{name}]: {message}",
+        additional_namespaces=["nserver"],
+    )  # type: ignore[call-arg]
 
     server: nserver.NameServer
 
     def get_argument_parser(self) -> argparse.ArgumentParser:
         parser = super().get_argument_parser()
-
-        # Server settings
-        parser.add_argument(
-            "--host",
-            action="store",
-            default="localhost",
-            help="Host (IP) to bind to. Use --ips to see available. Defaults to localhost.",
-        )
-
-        parser.add_argument(
-            "--port",
-            action="store",
-            default=9953,
-            type=int,
-            help="Port to bind to. Defaults to 9953.",
-        )
-
-        transport_group = parser.add_mutually_exclusive_group()
-        transport_group.add_argument(
-            "--tcp",
-            action="store_const",
-            const="TCPv4",
-            dest="transport",
-            help="Use TCPv4 socket for transport.",
-        )
-        transport_group.add_argument(
-            "--udp",
-            action="store_const",
-            const="UDPv4",
-            dest="transport",
-            help="Use UDPv4 socket for transport. (default)",
-        )
 
         # DNS settings
         parser.add_argument(
@@ -137,18 +109,17 @@ class Application(pillar.application.Application):
             help="Print available IPs and exit",
         )
 
-        parser.set_defaults(transport="UDPv4")
+        ## Remove --server action as we always load the domain-park server
+        # pylint: disable=protected-access
+        server_action = parser._option_string_actions.pop("--server")
+        parser._actions.remove(server_action)
+        parser._optionals._group_actions.remove(server_action)
+        # pylint: enable=protected-access
+
         return parser
 
     def get_server(self) -> nserver.NameServer:
         """Get NameServer instance."""
-
-        settings = nserver.Settings()
-        settings.server_transport = self.args.transport
-        settings.server_address = self.args.host
-        settings.server_port = self.args.port
-        settings.console_log_level = 0
-
         nameservers = []
         for nameserver in self.args.nameservers:
             if ":" in nameserver:
@@ -162,17 +133,4 @@ class Application(pillar.application.Application):
 
             nameservers.append((host, ip))
 
-        return make_server(nameservers, self.args.rua, self.args.ruf, settings)
-
-    def setup(self, *args, **kwargs):
-        super().setup(*args, **kwargs)
-        self.server = self.get_server()
-        return
-
-    def main(self) -> None:
-        if self.args.ips:
-            print("\n".join(get_available_ips()))
-            return
-
-        self.server.run()
-        return
+        return make_server(nameservers, self.args.rua, self.args.ruf)

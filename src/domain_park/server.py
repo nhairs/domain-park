@@ -11,7 +11,7 @@ from __future__ import annotations
 ## Standard Library
 
 ## Installed
-from nserver import NameServer, Response, A, TXT, NS, MX, CAA, Settings
+from nserver import NameServer, Response, A, TXT, NS, MX, CAA
 
 ## Application
 
@@ -22,7 +22,6 @@ def make_server(
     name_servers: list[tuple[str | None, str]],
     rua_address: str | None = None,
     ruf_address: str | None = None,
-    settings: Settings | None = None,
 ) -> NameServer:
     """Factory for producing domain-park servers
 
@@ -33,7 +32,7 @@ def make_server(
         settings:
     """
 
-    server = NameServer("domain-park", settings)  # pylint: disable=invalid-name
+    server = NameServer("domain-park")
 
     @server.rule("{base_domain}", ["NS"])
     def name_server_responder(query):

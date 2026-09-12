@@ -194,6 +194,7 @@ dmypy.json
 ### PROJECT
 ### ============================================================================
 # Project specific stuff goes here
+uv.lock
 # Binaries
 coredns
 dnsblast
