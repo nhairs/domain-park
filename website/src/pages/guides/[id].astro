@@ -1,0 +1,27 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import GuideCard from '../../components/GuideCard.astro';
+import { publicationBuild } from '../../config/site';
+
+export async function getStaticPaths() {
+  return (await getCollection('guides')).map((guide) => ({ params: { id: guide.id }, props: { guide } }));
+}
+interface Props { guide: CollectionEntry<'guides'> }
+const { guide } = Astro.props;
+if (publicationBuild && guide.data.outline) throw new Error(`Cannot publish outline: ${guide.id}`);
+const { Content, headings } = await render(guide);
+const related = (await getCollection('guides')).filter((entry) => entry.id !== guide.id).sort((a, b) => a.data.order - b.data.order);
+---
+<Layout title={`${guide.data.title} | Domain Park`} description={guide.data.description} noindex={guide.data.outline} article={!guide.data.outline}>
+  <div class="container article-container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Guide {String(guide.data.order).padStart(2, '0')}</span></nav>
+    <article>
+      <header class="article-header"><p class="eyebrow">Domain Park guides</p><h1>{guide.data.title}</h1><p class="article-description">{guide.data.description}</p></header>
+      {guide.data.outline && <aside class="outline-notice" aria-label="Content status"><strong>Article outline · for review</strong><p>This is a working structure for an upcoming guide. The bullets are writing notes, and the final instructions and explanations still need review.</p></aside>}
+      {headings.some((heading) => heading.depth === 2) && <nav class="contents" aria-label="On this page"><h2>On this page</h2><ul>{headings.filter((heading) => heading.depth === 2).map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ul></nav>}
+      <div class="prose"><Content /></div>
+    </article>
+    <section class="related-guides" aria-labelledby="related-title"><h2 id="related-title">Explore the other guides</h2><div class="guides-grid">{related.map((entry) => <GuideCard guide={entry} compact />)}</div></section>
+  </div>
+</Layout>

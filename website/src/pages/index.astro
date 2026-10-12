@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Nameservers from '../components/Nameservers.astro';
+import GuideCard from '../components/GuideCard.astro';
+import { publicationBuild, siteConfig } from '../config/site';
+
+const guides = (await getCollection('guides')).sort((a, b) => a.data.order - b.data.order);
+if (publicationBuild && guides.some((guide) => guide.data.outline)) {
+  throw new Error('Publication blocked: finish the guide outlines and set outline: false before deploying.');
+}
+---
+<Layout>
+  <div class="container">
+    <section class="hero" aria-labelledby="home-title">
+      <p class="eyebrow">Unused domains. Better protected.</p>
+      <h1 id="home-title">{siteConfig.name}</h1>
+      <p class="hero-intro">A free service for securely parking unused domains. Help protect your staff, your customers, and the public from phishing emails that spoof domains you own.</p>
+      <p class="hero-note">Free to use. Open source. As many domains as you need.</p>
+      <Nameservers />
+    </section>
+    <section class="guides-section" aria-labelledby="guides-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">Understand. Set up. Verify.</p><h2 id="guides-title">Put your unused domains<br />in safe hands.</h2></div>
+        <p>Why parking matters, how to get started, and what happens behind the DNS records.</p>
+      </div>
+      <div class="guides-grid">{guides.map((guide) => <GuideCard guide={guide} />)}</div>
+    </section>
+  </div>
+</Layout>

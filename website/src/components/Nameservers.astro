@@ -1,0 +1,33 @@
+---
+import { siteConfig } from '../config/site';
+---
+<section class="nameservers" aria-labelledby="nameservers-title">
+  <div class="nameservers-heading">
+    <h2 id="nameservers-title">Free public nameservers</h2>
+    <button class="copy-button" data-copy-nameservers hidden>Copy all <span aria-hidden="true">↗</span></button>
+  </div>
+  <ul class="nameserver-list" data-nameservers>
+    {siteConfig.nameservers.map((nameserver) => <li><code>{nameserver}</code></li>)}
+  </ul>
+  <div class="nameservers-note">
+    <p>Set these at your registrar. No signup or further configuration required.</p>
+    <p class="copy-status" role="status" aria-live="polite" data-copy-status></p>
+  </div>
+</section>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>('[data-copy-nameservers]');
+  const status = document.querySelector<HTMLElement>('[data-copy-status]');
+  if (button && status && navigator.clipboard?.writeText) {
+    button.hidden = false;
+    button.addEventListener('click', async () => {
+      const nameservers = Array.from(document.querySelectorAll('[data-nameservers] code'), (node) => node.textContent).join('\n');
+      try {
+        await navigator.clipboard.writeText(nameservers);
+        status.textContent = 'All four nameservers copied.';
+      } catch {
+        status.textContent = 'Copy unavailable. Select the nameservers above and copy them manually.';
+      }
+    });
+  }
+</script>
