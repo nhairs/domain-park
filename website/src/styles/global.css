@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 /* Adapted from Maria's typography, colour tokens and portfolio card grid.
-   See LICENSE-MARIA and README.md for upstream provenance. */
+   See website/NOTICE and README.md for upstream provenance. */
 :root {
   color-scheme: light;
   --background: #ffffff;

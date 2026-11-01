@@ -124,7 +124,8 @@ its shared layout approach, Manrope typography, light/dark colour tokens,
 responsive grid, and coloured portfolio cards. The portfolio pages, images,
 cookie-consent system, and Netlify/Vercel configuration are not included.
 
-Maria's MIT copyright and permission notice are preserved in `LICENSE-MARIA`.
+Maria's copyright, licence attribution, and source are recorded in `NOTICE`.
+The shared MIT permission and warranty terms are in `../LICENCE`.
 The site remains covered by the repository's MIT licence. Fontsource's Manrope
 package carries the font's own licence. Treat this as a customised copy rather
 than an automatically synchronised fork; review upstream changes before applying
