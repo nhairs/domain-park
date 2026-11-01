@@ -1,44 +1,62 @@
 ---
 title: How to set up Domain Park
-description: Change the nameservers at your registrar, then check that your unused domain is delegated correctly.
+description: "[TODO - come up with a better description]"
 order: 2
-outline: true
+outline: false
 ---
 
-## Before changing your nameservers
+So you've decided to securely park your domains, but what's next?
 
-- Confirm that the domain is genuinely unused, including its subdomains.
-- Record existing DNS settings and check for websites, email, forwarding, verification records, and other dependencies.
-- Explain that changing delegation replaces the current DNS service; Domain Park does not preserve custom records.
-- Add reviewed guidance for domains with DNSSEC enabled: check existing DS records and registrar procedures before changing DNS providers. Do not imply Domain Park supports DNSSEC without verifying the public service.
+Parking your domains on domain-park.org is a straight forward process that can be done in less than 10 minutes.
 
-## Find the nameserver settings at your registrar
+## Preparing to use Domain Park
 
-- Explain the difference between the registrar's nameserver/delegation settings and adding NS records inside a DNS zone.
-- Use provider-neutral terminology: domain management, DNS settings, custom nameservers.
-- Mention that some registrars support bulk updates or default nameservers for future registrations.
+Before you park your domain you should make sure it's not being used. This includes checking for existing websites, email servers, and subdomains. You should also backup your DNS records as not all providers will retain them when chaning nameservers.
 
-## Replace the current delegation
+Parking your domain will mean that all these services will become inaccessible using this name, and although the process is reversible, it can take up 48 hours to reverse the change.
 
-- Direct readers to use all four nameservers shown on the [homepage](/#nameservers-title).
-- Explain how to replace the previous nameserver entries and save the change.
-- Confirm that the public service needs no signup or per-domain configuration.
-- Explain that registrar validation behaviour varies; add troubleshooting instructions after testing the public service.
+You will also need to make sure that you have access to the *name server settings* for that domain. This will usually be on the website where you registered your domain.
 
-## Allow the change to propagate
+If you are using DNSSEC you will need to disable this for your domain - Domain Park does not currently support DNSSEC.
+
+## Update your nameservers
+
+Navigate to the domain management settings of your domain provider and set the nameservers to our servers:
+
+```
+ns1.domain-park.org
+ns2.domain-park.org
+ns3.domain-park.org
+ns4.domain-park.org
+```
+
+As many providers will include DNS, you may need to first select a setting such as "external", "custom", or "I'll use my own nameservers" in the domain management settings. The exact process for this will vary between providers so we've linked the official instructions of popular providers below. [TODO: how to link to heading]
+
+That's it. You're done. 🥳
+
+It can still take 48 hours for the parking to take affect as some caches may still be using your old nameservers.
+
+If you're an IT admin looking after a large number of domains you should consider using your providers bulk settings or infrastructure as code to make the change as a batch.
+
+## Verify the changes
+
+[TODO: update this]
 
 - Explain caching and why different resolvers may show different results temporarily.
 - Avoid a guaranteed propagation time; cover provider and TTL variation.
 - Link to [verification and troubleshooting](/guides/verify-and-troubleshoot/).
 
-## Official registrar instructions
+## Provider nameserver guides
 
-- Add links to official registrar documentation when the final prose is written.
-- Select providers based on the intended readers; record the date each link and procedure was checked.
-- Prefer documentation about changing authoritative nameservers, rather than editing individual DNS records.
+[TODO: generate alphabetical list, there's probably at least 20 providers]
 
-## If you need to use the domain again
+- [AWS](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-register-other-dns-service.html)
+- [Gandi](https://docs.gandi.net/en/domain_names/common_operations/changing_nameservers.html)
+- [GoDaddy](https://www.godaddy.com/en-au/help/change-my-domain-nameservers-664)
+- [Squarespace](https://support.squarespace.com/hc/en-us/articles/4404183898125-Review-change-or-reset-your-domain-s-nameservers)
 
-- Outline preparing a replacement DNS provider before changing delegation back.
-- Explain that live email and websites require appropriate records at the new provider.
-- Include a final verification step and a link to the protection guide for context.
+## Unparking your domain
+
+If you decide that you'd like to stop using Domain Park you simply need to change your nameservers back to their original settings, or a new DNS provider.
+
+When doing so, you should wait at least 48 hours before you attempt to use the new domain as some caches may still be using the Domain Park nameservers.
