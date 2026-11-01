@@ -1,0 +1,49 @@
+---
+import { siteConfig } from '../config/site';
+const setupPath = '/guides/setup/';
+---
+
+<header class="site-header container">
+  <a class="brand" href="/" aria-label="Domain Park home">
+    <svg class="brand-icon" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+      <path d="M16 3 27 8v8c0 7-11 13-11 13S5 23 5 16V8Z" fill="none" stroke="currentColor" stroke-width="2" />
+      <path d="m11 16 3 3 7-7" fill="none" stroke="currentColor" stroke-width="2" />
+    </svg>
+    <span>{siteConfig.name}</span>
+  </a>
+  <nav aria-label="Main navigation">
+    <a href={setupPath} aria-current={Astro.url.pathname === setupPath ? 'page' : undefined}>Setup guide</a>
+    <a href={siteConfig.repositoryUrl}>GitHub <span aria-hidden="true">↗</span></a>
+    <button class="theme-toggle" data-theme-toggle hidden aria-label="Dark mode" aria-pressed="false">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M20.5 13.2A8.6 8.6 0 0 1 10.8 3.5 8.6 8.6 0 1 0 20.5 13.2Z" />
+      </svg>
+    </button>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  if (toggle) {
+    const root = document.documentElement;
+    const preference = matchMedia('(prefers-color-scheme: dark)');
+    let savedTheme: string | null = null;
+    try { savedTheme = localStorage.getItem('domain-park-theme'); } catch { /* Storage is optional. */ }
+    if (savedTheme !== 'dark' && savedTheme !== 'light') savedTheme = null;
+    const apply = (dark: boolean) => {
+      root.dataset.theme = dark ? 'dark' : 'light';
+      toggle.setAttribute('aria-pressed', String(dark));
+    };
+    apply(savedTheme ? savedTheme === 'dark' : preference.matches);
+    toggle.hidden = false;
+    toggle.addEventListener('click', () => {
+      const dark = root.dataset.theme !== 'dark';
+      apply(dark);
+      savedTheme = dark ? 'dark' : 'light';
+      try { localStorage.setItem('domain-park-theme', savedTheme); } catch { /* Still works without persistence. */ }
+    });
+    preference.addEventListener('change', (event) => {
+      if (!savedTheme) apply(event.matches);
+    });
+  }
+</script>

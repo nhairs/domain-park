@@ -1,0 +1,15 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import GuideIcon from './GuideIcon.astro';
+interface Props { guide: CollectionEntry<'guides'>; compact?: boolean }
+const { guide, compact = false } = Astro.props;
+const colors = ['lime', 'cyan', 'lavender', 'mint'];
+---
+<a class:list={['guide-card', colors[(guide.data.order - 1) % colors.length], { compact }]} href={`/guides/${guide.id}/`}>
+  <div class="card-heading">
+    <h3>{guide.data.title}</h3>
+    <GuideIcon name={guide.data.icon} />
+  </div>
+  <p>{guide.data.description}</p>
+  <span class="card-bottom">{guide.data.outline ? 'Preview outline' : 'Read guide'} <span aria-hidden="true">→</span></span>
+</a>

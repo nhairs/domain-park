@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Nameservers from '../components/Nameservers.astro';
+import GuideCard from '../components/GuideCard.astro';
+import { publicationBuild, siteConfig } from '../config/site';
+
+const guides = (await getCollection('guides')).sort((a, b) => a.data.order - b.data.order);
+if (publicationBuild && guides.some((guide) => guide.data.outline)) {
+  throw new Error('Publication blocked: finish the guide outlines and set outline: false before deploying.');
+}
+---
+<Layout>
+  <div class="container">
+    <section class="hero" aria-labelledby="home-title">
+      <h1 id="home-title" class="eyebrow">{siteConfig.name}</h1>
+      <p class="hero-intro">A free service for securely parking unused domains.</p>
+      <!--<p class="hero-note">Put your domains in safe hands.</p>-->
+      <Nameservers />
+    </section>
+    <section class="guides-section" aria-labelledby="guides-title">
+      <div class="section-heading">
+        <h2 id="guides-title">Learn More</h2>
+        <p>Why parking matters, how to get started, and what happens behind the scenes.</p>
+      </div>
+      <div class="guides-grid">{guides.map((guide) => <GuideCard guide={guide} />)}</div>
+    </section>
+  </div>
+</Layout>
