@@ -1,6 +1,7 @@
 ---
 title: How Domain Park protects your domains
 description: A closer look at the DNS records that declare your domain does not send email, receive email, or serve a website.
+icon: shield
 order: 3
 outline: true
 ---

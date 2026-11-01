@@ -8,6 +8,7 @@ const guides = defineCollection({
     title: z.string().min(1),
     description: z.string().min(1),
     order: z.number().int().positive(),
+    icon: z.enum(['question', 'wrench', 'shield', 'search']),
     outline: z.boolean().default(true),
   }),
 });

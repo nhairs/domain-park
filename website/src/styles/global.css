@@ -81,19 +81,21 @@ code { font-family: var(--font-mono); }
 .hero h1 { margin-top: 1rem; font-size: clamp(2.15rem, 7.5vw, 6rem); line-height: 1.04; overflow-wrap: anywhere; }
 .hero-intro { max-width: 45rem; margin-top: 1.6rem; font-size: clamp(1.05rem, 1.6vw, 1.25rem); line-height: 1.7; }
 .hero-note { margin-top: 0.9rem; color: var(--muted-foreground); font-size: 0.95rem; }
-.nameservers { max-width: 49rem; margin-top: 2.5rem; padding: 1.5rem 1.75rem; background: var(--muted); border: 1px solid var(--border); border-radius: var(--radius); }
-.nameservers-heading { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
+.nameservers { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 1.5rem; max-width: 49rem; margin-top: 2.5rem; padding: 1.5rem 1.75rem; background: var(--muted); border: 1px solid var(--border); border-radius: var(--radius); }
+.nameservers-heading, .nameservers-intro { grid-column: 1; }
+.nameserver-list, .copy-status { grid-column: 1 / -1; }
+.nameservers > .copy-button { grid-column: 2; grid-row: 1 / 3; align-self: end; }
 .nameservers h2 { font-size: 1.05rem; letter-spacing: -0.02em; }
 .copy-button { display: inline-flex; align-items: center; gap: 0.7rem; min-height: 44px; padding: 0.35rem 0.85rem; border: 1px solid var(--control-border); background: var(--background); border-radius: 0.65rem; font-size: 0.8rem; font-weight: 700; }
 .copy-button:hover { border-color: var(--foreground); }
-.nameserver-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem 2rem; list-style: none; padding: 0; margin: 1.25rem 0; }
+.nameserver-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem 2rem; list-style: none; padding: 0; margin: 1.25rem 0 0; }
 .nameserver-list code { font-size: 0.95rem; user-select: all; overflow-wrap: anywhere; }
-.nameservers-note { border-top: 1px solid var(--border); padding-top: 1rem; color: var(--muted-foreground); font-size: 0.8rem; }
+.nameservers-intro { margin-top: 0.75rem; color: var(--muted-foreground); font-size: 0.85rem; }
 .copy-status:not(:empty) { margin-top: 0.5rem; color: var(--foreground); }
 .guides-section { padding-bottom: 5rem; }
-.section-heading { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: 2rem; }
-.section-heading h2 { margin-top: 0.75rem; font-size: clamp(1.8rem, 3vw, 2.75rem); line-height: 1.15; }
-.section-heading > p { max-width: 20rem; font-size: 0.95rem; color: var(--muted-foreground); }
+.section-heading { display: grid; gap: 0.75rem; max-width: 42rem; margin-bottom: 2rem; }
+.section-heading h2 { font-size: clamp(1.8rem, 3vw, 2.75rem); line-height: 1.15; }
+.section-heading > p { max-width: 40rem; text-wrap: pretty; font-size: 0.95rem; color: var(--muted-foreground); }
 .guides-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
 .guide-card { display: flex; flex-direction: column; gap: 1.15rem; min-width: 0; padding: 2rem; border-radius: var(--radius); color: var(--card-ink); text-decoration: none; transition: transform 140ms ease, box-shadow 140ms ease; }
 .guide-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
@@ -102,9 +104,9 @@ code { font-family: var(--font-mono); }
 .guide-card.cyan { background: var(--cyan); }
 .guide-card.lavender { background: var(--lavender); }
 .guide-card.mint { background: var(--mint); }
-.card-top { display: flex; justify-content: space-between; align-items: center; }
-.card-top .eyebrow { color: var(--card-ink); }
-.card-top > span:last-child { font-size: 1.5rem; line-height: 1; }
+.card-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.card-heading h3 { min-width: 0; }
+.guide-icon { flex-shrink: 0; margin-top: 0.2rem; }
 .guide-card h3 { max-width: 25rem; font-size: clamp(1.45rem, 2.3vw, 2rem); line-height: 1.2; }
 .guide-card p { max-width: 28rem; font-size: 0.95rem; line-height: 1.65; }
 .card-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 1rem; font-size: 0.85rem; font-weight: 750; }
@@ -114,18 +116,17 @@ code { font-family: var(--font-mono); }
 .site-footer nav { display: flex; flex-wrap: wrap; gap: 1.25rem; }
 .site-footer a { display: inline-flex; align-items: center; min-height: 44px; color: var(--foreground); }
 .article-container { max-width: 52rem; padding-bottom: 4rem; }
-.breadcrumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-block: 2rem 3rem; font-size: 0.85rem; color: var(--muted-foreground); }
-.breadcrumbs a { min-height: 44px; display: inline-flex; align-items: center; }
-.article-header h1 { margin-block: 1rem 1.5rem; font-size: clamp(2rem, 4.5vw, 3.5rem); line-height: 1.12; }
+.article-header { padding-top: 1.5rem; }
+.article-header h1 { margin-block: 0 1.5rem; font-size: clamp(2rem, 4.5vw, 3.5rem); line-height: 1.12; }
 .article-description { color: var(--muted-foreground); font-size: 1.15rem; }
 .outline-notice { margin-top: 2rem; padding: 1.25rem 1.5rem; border-radius: 1rem; color: var(--card-ink); background: var(--lime); }
 .outline-notice strong { display: block; font-size: 0.9rem; }
 .outline-notice p { margin-top: 0.4rem; font-size: 0.85rem; }
-.contents { margin-block: 2.5rem; padding: 1.25rem 1.5rem; border: 1px solid var(--border); border-radius: 1rem; background: var(--muted); }
-.contents h2 { font-size: 1rem; }
-.contents ul { list-style: none; padding: 0; margin: 0.75rem 0 0; }
-.contents li + li { margin-top: 0.35rem; }
-.contents a { font-size: 0.9rem; color: var(--link); }
+.table-of-contents { margin-block: 3.5rem; padding-block: 1.75rem; border-block: 1px solid var(--border); }
+.table-of-contents h2 { font-size: 1rem; }
+.table-of-contents ul { list-style: none; padding: 0; margin: 0.75rem 0 0; }
+.table-of-contents li + li { margin-top: 0.35rem; }
+.table-of-contents a { font-size: 0.9rem; color: var(--link); }
 .prose { max-width: 70ch; font-size: 1.05rem; line-height: 1.8; }
 .prose h2 { font-size: 1.65rem; line-height: 1.3; margin-top: 2.5rem; }
 .prose h3 { font-size: 1.2rem; margin-top: 2rem; }
@@ -158,14 +159,13 @@ code { font-family: var(--font-mono); }
   .site-header nav { gap: 1.25rem; }
   .hero { padding-block: 3rem; }
   .nameservers { padding: 1.25rem; }
+  .nameservers { grid-template-columns: minmax(0, 1fr); }
+  .nameservers > .copy-button { grid-column: 1; grid-row: auto; justify-self: end; margin-top: 1rem; }
   .nameserver-list { grid-template-columns: 1fr; }
-  .section-heading { display: block; }
-  .section-heading > p { margin-top: 1rem; max-width: 32rem; }
   .guides-grid { grid-template-columns: 1fr; }
   .guide-card { padding: 1.5rem; }
   .guide-card h3 { font-size: 1.6rem; }
   .guides-section { padding-bottom: 3rem; }
-  .breadcrumbs { margin-block: 1rem 2rem; }
   .article-container { padding-bottom: 3rem; }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -1,0 +1,9 @@
+---
+import { CircleQuestionMark, Wrench, ShieldCheck, Search } from '@lucide/astro';
+import type { CollectionEntry } from 'astro:content';
+interface Props { name: CollectionEntry<'guides'>['data']['icon'] }
+const { name } = Astro.props;
+const icons = { question: CircleQuestionMark, wrench: Wrench, shield: ShieldCheck, search: Search };
+const Icon = icons[name];
+---
+<Icon class="guide-icon" size={26} stroke-width={1.75} aria-hidden="true" />

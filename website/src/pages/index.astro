@@ -20,9 +20,8 @@ if (publicationBuild && guides.some((guide) => guide.data.outline)) {
     </section>
     <section class="guides-section" aria-labelledby="guides-title">
       <div class="section-heading">
-        <!--div><h2 id="guides-title">Learn More</h2></div>-->
-        <div><h2 id="guides-title">Learn More</h2></div>
-        <p>Why parking matters, how to get started, and what happens behing the scenes.</p>
+        <h2 id="guides-title">Learn More</h2>
+        <p>Why parking matters, how to get started, and what happens behind the scenes.</p>
       </div>
       <div class="guides-grid">{guides.map((guide) => <GuideCard guide={guide} />)}</div>
     </section>

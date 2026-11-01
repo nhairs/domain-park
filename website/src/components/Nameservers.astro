@@ -3,16 +3,14 @@ import { siteConfig } from '../config/site';
 ---
 <section class="nameservers" aria-labelledby="nameservers-title">
   <div class="nameservers-heading">
-    <h2 id="nameservers-title">Free public nameservers</h2>
-    <button class="copy-button" data-copy-nameservers hidden>Copy all <span aria-hidden="true">↗</span></button>
+    <h2 id="nameservers-title">Get started with the free public nameservers</h2>
   </div>
+  <p class="nameservers-intro">Set these at your domain provider. No signup or further configuration required.</p>
+  <button class="copy-button" data-copy-nameservers hidden>Copy all <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" /></svg></button>
   <ul class="nameserver-list" data-nameservers>
     {siteConfig.nameservers.map((nameserver) => <li><code>{nameserver}</code></li>)}
   </ul>
-  <div class="nameservers-note">
-    <p>Set these at your domain registrar. No signup or further configuration required.</p>
-    <p class="copy-status" role="status" aria-live="polite" data-copy-status></p>
-  </div>
+  <p class="copy-status" role="status" aria-live="polite" data-copy-status></p>
 </section>
 
 <script>

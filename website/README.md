@@ -50,8 +50,14 @@ for example `setup.md` becomes `/guides/setup/`. Each file needs:
 title: How to set up Domain Park
 description: A short description used on cards and in page metadata.
 order: 2
+icon: wrench
 outline: true
 ```
+
+Choose a card icon with `icon: question`, `wrench`, `shield`, or `search`. Icons are
+Lucide SVGs rendered at build time, not emoji. They appear at the top right of
+each card and are decorative alongside the article title. See
+[Lucide](https://lucide.dev/) for the icon library (ISC licence).
 
 Keep orders positive and unique. Cards are sorted by order and their colours
 cycle through lime, cyan, lavender, and mint. Article headings create the table

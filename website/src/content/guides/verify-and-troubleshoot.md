@@ -1,6 +1,7 @@
 ---
 title: How to check your domain is securely parked
 description: Verify your nameserver delegation and DNS responses, and work through common setup problems.
+icon: search
 order: 4
 outline: true
 ---

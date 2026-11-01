@@ -1,6 +1,7 @@
 ---
 title: How to set up Domain Park
-description: "[TODO - come up with a better description]"
+description: Park your unused domains with Domain Park, from changing nameservers at your domain provider to checking the setup.
+icon: wrench
 order: 2
 outline: false
 ---

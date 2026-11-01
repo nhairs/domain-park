@@ -1,6 +1,7 @@
 ---
 title: Why you should securely park your domains
 description: Unused domains can still be used to impersonate your brand. Understand the risks and when secure parking makes sense.
+icon: question
 order: 1
 outline: true
 ---
