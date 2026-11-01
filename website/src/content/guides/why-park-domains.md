@@ -6,34 +6,44 @@ order: 1
 outline: true
 ---
 
+Just by existing, a domain opens itself up for abuse by bad actors who may target you, your business, or the wider public using your name. How do these names come to exist, what are their risks, and how can you secure them?
+
+## Reasons domains are unused
+
+There are many reasons why a domain may be unused, sometimes they have falled out of use, but often they are never used at all.
+
+**Defensive registrations**: when you have a brand or trademark it is common to register many variations of the official domain to prevent copy-cats, scammers, and other undesirable behaviour.
+
+**Domain investing**: a domain can be incredibly valuable to the right customer, sometimes millions of dollars, so some invest in domains waiting for such customers.
+
+**New business ideas**: businesses, entrepreneurs, and hobbyists will preemptively register domains for an idea they've had well before it's ready, just so someone else can't grab the doamin before them.
+
+**Retired domains**: the only constant is change. Perhaps your brand name changed, a product line disappeared, or that super cool domain you got in your teens doesn't have the professional feel you'd like in your 30's.
+
+Sound familar? You might have domains that need securing.
+
 ## An unused domain still represents you
 
-- Introduce parked domains: registered domains with no intended website or email service.
-- Explain that owning a domain does not automatically declare that it sends no email.
-- Distinguish registration, DNS hosting, and the policies receiving mail systems apply.
+The risk that comes with an unused domain stems from the fact that it can easily be impersonated and used for phishing.
 
-## Domains registered to protect your brand
+Most people are used to the fact that a website will use many domains when contacting them, often using the same brand, but sometimes on completely different domains. So how do they know which emails are legitemate and which ones are scams? Publishing a list of your official domains can help, but it requires users to actively check.
 
-- Describe defensive registrations: spelling variations, other top-level domains, and previous brand names.
-- Outline a customer phishing scenario using a defensively registered domain without restrictive email records.
-- Outline an employee phishing scenario impersonating an internal team or supplier.
-- Make clear that Domain Park only covers domains the owner delegates to the service; it cannot protect similar domains registered by someone else.
+This is all exacerbated if your company has changed it's name multiple times. Staff and systems may still use the old email addresses, long after the re-brand has completed and the old domains shutdown. Do your staff and customers know not to use these domains? What about your IT department.
 
-## Retired projects and domains kept for later
+In the case of names that were used and then shutdown, there might still be DNS records that need cleaning up and pointing to old IP addresses that you no longer control. If an attacker can take control of that IP address, for instance by using the same cloud provider, they can hijack the name and use it for phishing websites too!
 
-- Cover retired products, abandoned campaigns, and domains reserved for future use.
-- Explain why default registrar parking and stale DNS delegations need review rather than assuming they are safe.
-- Discuss avoiding dependence on abandoned DNS accounts; review any DNS-takeover claims separately from email-authentication claims.
+## How is this abuse allowed?
 
-## When secure parking is appropriate
+When the internet was conceived no-one predicted all the bad actors that would try abuse it, and so security was never baked in. When it became apparent that we would infact need security for most web infrastructure, it was mostly done as an optional add on rather than a hard requirement.
 
-- Explain the intended use: domains that do not need live websites, email, or other custom DNS records.
-- Include a pre-change inventory of existing services and subdomains.
-- Point to [the setup guide](/guides/setup/) for replacing delegation.
+Why optional? Adding security to your infrastucture often means requiring that others also have set up the same security. So what do you do if they don't? Do you stop receiving emails from your customers? Do you prevent them from accessing your website? In-short ensuring backwards compatibility to the insecure services and that everything worked was usually more important to everyone: humans and businesses alike.
 
-## What protection can and cannot do
+For email in particular, many of the security protocols require you to create DNS records to define the security settings, and if the record is missing the default is to allow the email. No Setup = No Security.
 
-- Explain that receiving mail systems must apply the published authentication policies.
-- Distinguish domain spoofing from display-name impersonation, compromised mailboxes, and attacker-owned lookalike domains.
-- Avoid promising that all phishing is prevented or that parking protects the registrar account.
-- Link to [how the DNS records work](/guides/how-protection-works/).
+## How to secure unused domain?
+
+If you're convinced that you need to protect your unused domains, the good news is that you're in the right place.
+
+You can [use Domain Park to secure your domains](/[TODO: link to setup]) in less than 10 minutes.
+
+If you'd like to secure your domain manually, [we have a guide for that too]([TODO: link to how protection works]).

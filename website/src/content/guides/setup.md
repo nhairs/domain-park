@@ -20,6 +20,8 @@ You will also need to make sure that you have access to the *name server setting
 
 If you are using DNSSEC you will need to disable this for your domain - Domain Park does not currently support DNSSEC.
 
+Also note that Domain Park does **not** support subdomains, only use it for your registered domain.
+
 ## Update your nameservers
 
 Navigate to the domain management settings of your domain provider and set the nameservers to our servers:
