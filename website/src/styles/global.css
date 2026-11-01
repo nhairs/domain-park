@@ -112,8 +112,9 @@ code { font-family: var(--font-mono); }
 .card-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 1rem; font-size: 0.85rem; font-weight: 750; }
 .guide-card.compact { padding: 1.5rem; }
 .guide-card.compact h3 { font-size: 1.25rem; }
-.site-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem 2rem; padding-block: 2rem 3rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--muted-foreground); }
-.site-footer nav { display: flex; flex-wrap: wrap; gap: 1.25rem; }
+.site-footer { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 1rem 2rem; padding-block: 2rem 3rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--muted-foreground); }
+.site-footer .footer-credits a { min-height: auto; display: inline; }
+.site-footer nav { margin-left: auto; display: flex; flex-wrap: wrap; gap: 1.25rem; }
 .site-footer a { display: inline-flex; align-items: center; min-height: 44px; color: var(--foreground); }
 .article-container { max-width: 52rem; padding-bottom: 4rem; }
 .article-header { padding-top: 1.5rem; }
