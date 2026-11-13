@@ -3,7 +3,7 @@ title: Why you should securely park your domains
 description: Unused domains can still be used to impersonate your brand. Understand the risks and when secure parking makes sense.
 icon: question
 order: 1
-outline: true
+outline: false
 ---
 
 Just by existing, a domain opens itself up for abuse by bad actors who may target you, your business, or the wider public using your name. How do these names come to exist, what are their risks, and how can you secure them?

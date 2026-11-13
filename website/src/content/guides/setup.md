@@ -82,12 +82,13 @@ Follow your provider's instructions for changing the nameservers of a domain reg
 - [Vercel](https://vercel.com/docs/domains/managing-nameservers)
 - [WordPress.com](https://wordpress.com/support/domains/change-name-servers/)
 
-Some providers restrict changes to external nameservers. Cloudflare Registrar requires you to transfer your domain to another registrar before using a different DNS provider. See [Cloudflare's nameserver guidance](https://developers.cloudflare.com/dns/nameservers/update-nameservers/).
+Some providers restrict changes to external nameservers and instead require you to transfer your domain to another registrar:
 
-For domains purchased through Azure App Service Domains, Microsoft support directs customers to transfer the domain to another registrar to change nameservers. See [Microsoft's guidance on changing App Service domain nameservers](https://learn.microsoft.com/en-us/answers/questions/2283480/unable-to-change-nameservers-for-azure-app-service).
+- [Cloudflare](https://developers.cloudflare.com/dns/nameservers/update-nameservers/)
+- [Microsoft Azure App Service](https://learn.microsoft.com/en-us/answers/questions/2283480/unable-to-change-nameservers-for-azure-app-service).
 
 ## Unparking your domain
 
-If you decide that you'd like to stop using Domain Park you simply need to change your nameservers back to their original settings, or a new DNS provider.
+If you decide that you'd like to stop using Domain Park you simply need to change your nameservers back to their original settings, or to a new DNS provider.
 
 When doing so, you should wait at least 48 hours before you attempt to use the new domain as some caches may still be using the Domain Park nameservers.
